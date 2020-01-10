@@ -1,0 +1,666 @@
+import React, { Component } from "react";
+import { StyleSheet, View, Text, TouchableOpacity,Image, Button } from "react-native";
+import { AnimatedSVGPath } from 'react-native-svg-animations';
+import { Buffer } from 'buffer';
+import axios from 'react-native-axios';
+import FlashMessage from "react-native-flash-message";
+
+
+import Svg,{
+  Circle,
+  Ellipse,
+  G,
+  TSpan,
+  TextPath,
+  Path,
+  Polygon,
+  Polyline,
+  Line,
+  Rect,
+  Use,
+  Symbol,
+  Defs,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  ClipPath,
+  Pattern,
+  Mask,
+} from 'react-native-svg';
+import MaterialIconTextbox from "../symbols/MaterialIconTextbox";
+import MaterialIconTextbox1 from "../symbols/MaterialIconTextbox1";
+import MaterialButtonPurple4 from "../symbols/MaterialButtonPurple4";
+import MaterialButtonPurple3 from "../symbols/MaterialButtonPurple3";
+import { Dimensions, Platform, PixelRatio, responsiveFontSize } from 'react-native';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+   var username = 'administrator';
+   var password = 'sysadmin';
+   var session_url = 'http://192.168.109.92:7080';
+   //var basicAuth = 'Basic ' + new Buffer(username + ':' + password).toString('base64');
+   
+   var axiosInstance = axios.create({
+      baseURL: session_url,
+       headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'},
+     auth: {
+        username: username,
+        password: password
+  }
+    
+   });
+  
+
+export default class Signin extends Component {
+   state = { mobile: "", password: "", login: false}
+    
+   onLoginAttempt(body) {
+     console.log(body)
+     if (body.Status === 0){
+    this.props.navigation.navigate('Landing')
+     } else {
+      showMessage({
+        message: toString(error),
+        description: "Something went wrong",
+        type: "danger",
+        hideStatusBar: true,
+        icon: true
+      });
+
+     }
+
+ }
+
+ onLoginSuccess = () => {
+   console.log("Login")
+  this.props.navigation.navigate('Landing')
+
+ }
+
+
+   Login(username, password) {
+     	axiosInstance
+      .post(session_url + '/json/account/AuthenticateUser', JSON.stringify({ Identifier: username, SecurityData: password, CredentialType: 2 }))
+      .then((response) => {
+        if (response.data.Status === 1){
+          this.props.navigation.navigate('Landing')
+                 this.onLoginSuccess() 
+        } else {
+              ({
+              message: response.data.ErrorDescription,
+              description: "Something went wrong",
+              type: "danger",
+              hideStatusBar: true,
+              icon: true
+            });
+           }
+      })
+     	.catch(function(error) {
+        showMessage({
+           message: toString(error),
+           description: "Something went wrong",
+           type: "danger",
+           hideStatusBar: true,
+           icon: true
+         });
+			});
+	}
+ 
+  OnButtonPress()  {
+    const { mobile, password} = this.state;
+    console.log(mobile, password)
+    this.Login(mobile, password)
+
+}
+
+  render() {
+  
+    return (
+      <View style={styles.root}>
+      <FlashMessage position="top" />
+        <View style={styles.blobBg}>
+          <Svg viewBox={"-0 -0 386 386"} style={styles.oval}>
+            <Defs>
+              <RadialGradient id="eh06e6" x1={50} x2={50} y1={0} y2={100}>
+                <Stop offset="0.00" stopColor="rgba(246,121,163,1)" />
+                <Stop offset="1.00" stopColor="rgba(233,68,106,1)" />
+              </RadialGradient>
+            </Defs>
+            <Path
+              strokeWidth={0}
+              fill={"rgba(167,169,172,1)"}
+              fillOpacity={0.62}
+              d={
+                "M193.00 385.54 C193.00 385.54 247.78 391.15 289.84 363.16 C342.98 327.80 386.00 252.19 386.00 192.77 C386.00 86.31 299.59 0.00 193.00 0.00 C86.41 0.00 0.00 86.31 0.00 192.77 C0.00 280.43 58.58 354.42 138.76 377.82 C155.97 382.85 174.17 385.54 193.00 385.54 C193.00 385.54 193.00 385.54 193.00 385.54 Z"
+              }
+            />
+          </Svg>
+          <Svg viewBox={"-0 -0 246 246"} style={styles.ovalCopy}>
+            <Defs>
+              <RadialGradient id="afSt9t" x1={50} x2={50} y1={0} y2={97}>
+                <Stop offset="0.00" stopColor="rgba(246,220,121,1)" />
+                <Stop offset="1.00" stopColor="rgba(255,158,123,1)" />
+              </RadialGradient>
+            </Defs>
+            <Path
+              strokeWidth={0}
+              fill={"rgba(153,133,190,1)"}
+              fillOpacity={0.47}
+              d={
+                "M123.00 246.00 C190.93 246.00 246.00 190.93 246.00 123.00 C246.00 55.07 190.93 0.00 123.00 0.00 C55.07 0.00 0.00 55.07 0.00 123.00 C0.00 190.93 55.07 246.00 123.00 246.00 C190.93 246.00 123.00 246.00 123.00 246.00 Z"
+              }
+            />
+          </Svg>
+        </View>
+        
+       
+        <Text style={styles.hello}>Hello!{"\n"}Login up to get started.</Text>
+
+        <View>
+          <Svg viewBox={"-0 -0 32 32"} style={styles.oval1}>
+            <Path
+              strokeWidth={0}
+              duration={300}
+              delay={10}
+              fill={"rgba(255,22,48,1)"}
+              fillOpacity={0.1}
+              strokeOpacity={0.1}
+              d={
+                "M16.00 32.00 C24.84 32.00 32.00 24.84 32.00 16.00 C32.00 7.16 24.84 0.00 16.00 0.00 C7.16 0.00 0.00 7.16 0.00 16.00 C0.00 24.84 7.16 32.00 16.00 32.00 C24.84 32.00 16.00 32.00 16.00 32.00 Z"
+              }
+            />
+          </Svg>
+          
+          <Button
+           style={styles.leftArrow}
+           color='#fff'
+           title=""
+           onPress={() => this.props.navigation.navigate('Home')}
+          >
+            <Svg viewBox={"-0 -0 20 15.40390625"} style={styles.path2}>
+              <Path
+                strokeWidth={0}
+                fill={"rgba(255,255,255,1)"}
+                d={
+                  "M20.00 7.70 C20.00 8.15 19.19 8.51 19.19 8.51 L2.76 8.51 L8.27 14.02 C8.27 14.02 8.59 14.85 8.27 15.17 C8.12 15.32 7.91 15.40 7.70 15.40 C7.50 15.40 7.13 15.17 7.13 15.17 L0.24 8.27 C0.24 8.27 0.24 8.14 0.24 8.14 C0.10 8.01 0.00 7.86 0.00 7.70 C0.00 7.54 0.10 7.39 0.24 7.27 C0.24 7.27 0.24 7.13 0.24 7.13 L7.13 0.24 C7.13 0.24 7.96 -0.08 8.27 0.24 C8.59 0.55 8.27 1.38 8.27 1.38 L2.76 6.89 L19.19 6.89 C19.19 6.89 20.00 7.26 20.00 7.70 C20.00 8.15 20.00 7.70 20.00 7.70 Z"
+                }
+              />
+            </Svg>
+            </Button> 
+       
+        </View>
+        <View style={styles.bottomBlob}>
+          <Svg viewBox={"-0 -0 404 404"} style={styles.oval2}>
+            <Defs>
+              <RadialGradient id="FX0Q1j" x1={50} x2={50} y1={0} y2={100}>
+                <Stop offset="0.00" stopColor="rgba(246,121,163,1)" />
+                <Stop offset="1.00" stopColor="rgba(233,68,106,1)" />
+              </RadialGradient>
+            </Defs>
+            <Path
+              strokeWidth={0}
+              fill={"url(#FX0Q1j)"}
+              d={
+                "M202.00 404.00 C313.56 404.00 404.00 313.56 404.00 202.00 C404.00 90.44 313.56 0.00 202.00 0.00 C90.44 0.00 0.00 90.44 0.00 202.00 C0.00 313.56 90.44 404.00 202.00 404.00 C313.56 404.00 202.00 404.00 202.00 404.00 Z"
+              }
+            />
+          </Svg>
+          <Svg viewBox={"-0 -0 246 246"} style={styles.ovalCopy1}>
+            <Defs>
+              <RadialGradient id="YtYHrg" x1={50} x2={50} y1={0} y2={97}>
+                <Stop offset="0.00" stopColor="rgba(246,220,121,1)" />
+                <Stop offset="1.00" stopColor="rgba(255,158,123,1)" />
+              </RadialGradient>
+            </Defs>
+            <Path
+              strokeWidth={0}
+              fill={"url(#YtYHrg)"}
+              scale={0.5}
+              delay={100}
+              d={
+                "M123.00 246.00 C190.93 246.00 246.00 190.93 246.00 123.00 C246.00 55.07 190.93 0.00 123.00 0.00 C55.07 0.00 0.00 55.07 0.00 123.00 C0.00 190.93 55.07 246.00 123.00 246.00 C190.93 246.00 123.00 246.00 123.00 246.00 Z"
+              }
+            />
+          </Svg>
+        </View>
+        <Image
+          source={require("../assets/images/VWCI-011.png")}
+          resizeMode={"contain"}
+          style={styles.image}
+        />
+        <Svg viewBox={"0 0 12.00 12.00"} style={styles.ellipse}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(52,32,79,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={6}
+            cy={6}
+            rx={5.5}
+            ry={5.5}
+          />
+        </Svg>
+        
+        <Svg viewBox={"0 0 16.00 16.00"} style={styles.ellipse2}>
+          <Ellipse
+            strokeWidth={1}
+            strokeColor={"green"}
+            fill={"rgba(230, 230, 230,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={8}
+            cy={8}
+            rx={8}
+            ry={8}
+            scale={0.75}
+            delay={100}
+
+          />
+        </Svg>
+           
+            
+        <Svg viewBox={"0 0 13.61 13.61"} style={styles.ellipse3}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(153,133,190,1)"}
+            cx={6.8}
+            cy={6.8}
+            rx={6.3}
+            ry={6.3}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 10.00 10.00"} style={styles.ellipse4}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(230, 230, 230,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={5}
+            cy={5}
+            rx={4.5}
+            ry={4.5}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 12.81 12.81"} style={styles.ellipse5}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(52,32,79,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={6.41}
+            cy={6.41}
+            rx={5.91}
+            ry={5.91}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 8.41 8.41"} style={styles.ellipse6}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(153,133,190,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={4.2}
+            cy={4.2}
+            rx={3.7}
+            ry={3.7}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 20.00 20.00"} style={styles.ellipse7}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(230, 230, 230,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={10}
+            cy={10}
+            rx={10}
+            ry={10}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 12.00 12.00"} style={styles.ellipse8}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(230, 230, 230,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={6}
+            cy={6}
+            rx={5.5}
+            ry={5.5}
+          />
+        </Svg>
+        <Svg viewBox={"0 0 20.00 20.00"} style={styles.ellipse9}>
+          <Ellipse
+            strokeWidth={1}
+            fill={"rgba(230, 230, 230,1)"}
+            stroke={"rgba(230, 230, 230,1)"}
+            cx={10}
+            cy={10}
+            rx={10}
+            ry={10}
+          />
+        </Svg>
+        <MaterialIconTextbox style={styles.materialIconTextbox}
+                             secureTextEntry={false}
+                             placeholder="Mobile Number"
+                             icon="account-check" 
+                             onChangeText={ mobile => this.setState({ mobile })}
+                             value={this.mobile} />
+        <MaterialIconTextbox style={styles.materialIconTextbox1} 
+                             secureTextEntry={true}  
+                             placeholder="Password"  
+                             icon="security-lock" 
+                             onChangeText={password => this.setState({ password })}
+                             value={this.password}/>
+        <Text style={styles.text}>
+          Accountability &amp; Intergrity trhough Technology
+        </Text>
+        <Text style={styles.text2}>
+          By signing in, you are agree to the terms and conditions
+        </Text>
+       
+        <MaterialButtonPurple4 style={styles.button} text="LOGIN" 
+                             onPress={this.OnButtonPress.bind(this)} />             
+        <MaterialButtonPurple4 style={styles.materialButtonPurple4} 
+                               text="FORGOT PASSWORD" />
+
+      </View>
+    );
+  }
+}
+
+
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+     backgroundColor: "rgba(255,255,255,1)",
+    justifyContent: 'center', 
+    position: 'absolute', 
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+
+  },
+  blobBg: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    top: "-19.70%",
+    left: "-13.33%",
+    width: "137.87%",
+    height: "47.54%",
+    position: "absolute",
+    alignItems: 'center',
+    justifyContent: 'center', 
+
+  },
+  oval: {
+    top: "0%",
+    left: "25.34%",
+    width: "74.66%",
+    height: "100.12%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    borderColor: "transparent"
+  },
+  ovalCopy: {
+    top: "15.03%",
+    left: "0%",
+    width: "47.58%",
+    height: "63.73%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    borderColor: "transparent"
+  },
+  hello: {
+    top: "9.43%",
+    left: "20.80%",
+    width: "58.67%",
+    height: "6.65%",
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    position: "absolute",
+    fontSize: 18,
+    fontFamily: "montserrat-medium",
+    lineHeight: 27,
+    textAlign: "center"
+  },
+ 
+  rectangle: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+   
+    top: "0.00%",
+    left: "0.00%",
+    width: "100.00%",
+    height: "100.00%",
+    backgroundColor: "rgba(42,5,77,1)",
+    position: "absolute",
+    borderRadius: 4
+  },
+  signUp1: {
+    top: "30.77%",
+    left: "35.24%",
+    width: "29.84%",
+    height: 20,
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    position: "absolute",
+    fontSize: 16,
+    fontFamily: "montserrat-medium",
+    lineHeight: 20,
+    letterSpacing: 0.53,
+    textAlign: "center"
+  },
+  group4: {
+    top: "5.42%",
+    left: "4.00%",
+    width: "8.53%",
+    height: "3.94%",
+    position: "absolute"
+  },
+  oval1: {
+    top: "0.00%",
+    left: "0.00%",
+    width: "100.00%",
+    height: "100.00%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    borderColor: "transparent"
+  },
+  leftArrow: {
+    top: "25.00%",
+    left: "18.75%",
+    width: "62.50%",
+    height: "49.48%",
+    position: "absolute"
+  },
+  path2: {
+    top: "0.20%",
+    left: "0.00%",
+    width: "100.00%",
+    height: "97.29%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    borderColor: "transparent"
+  },
+  bottomBlob: {
+    alignItems: 'center',
+    justifyContent: 'center', 
+    top: "91.37%",
+    left: "76%",
+    width: "127.47%",
+    height: "49.88%",
+    position: "absolute",
+    opacity: 0.2
+  },
+  oval2: {
+    top: "0.14%",
+    left: "15.48%",
+    width: "84.52%",
+    height: "99.75%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    borderColor: "transparent"
+  },
+  ovalCopy1: {
+    top: "10.37%",
+    left: "0.00%",
+    width: "51.46%",
+    height: "60.74%",
+    backgroundColor: "transparent",
+    position: "absolute",
+    transform: [
+      {
+        scaleY: -1
+      }
+    ],
+    borderColor: "transparent"
+  },
+  image: {
+    top: "10%",
+    
+    left: "5%",
+    width: 331.98,
+    height: 331.98,
+    position: "absolute"
+  },
+  ellipse: {
+    top: 195.95,
+    left: 46.99,
+    width: 12,
+    height: 12,
+    position: "absolute",
+    transform: [
+      {
+        scaleY: -1
+      }
+    ] 
+   },
+  ellipse2: {
+    top: 182,
+    left: 119,
+    width: 16,
+    height: 16,
+    position: "absolute"
+  },
+  ellipse3: {
+    top: 196,
+    left: 271,
+    width: 13.61,
+    height: 13.61,
+    position: "absolute"
+  },
+  ellipse4: {
+    top: 172,
+    left: 198.52,
+    width: 10,
+    height: 10,
+    position: "absolute"
+  },
+  ellipse5: {
+    top: 335.19,
+    left: 102.19,
+    width: 12.81,
+    height: 12.81,
+    position: "absolute"
+  },
+  ellipse6: {
+    top: 348,
+    left: 243,
+    width: 8.41,
+    height: 8.41,
+    position: "absolute"
+  },
+  ellipse7: {
+    top: 60,
+    left: 301,
+    width: 20,
+    height: 20,
+    position: "absolute",
+  },
+  ellipse8: {
+    top: 711.43,
+    left: 46.99,
+    width: 12,
+    height: 12,
+    position: "absolute",
+  },
+  ellipse9: {
+    top: 716,
+    left: 115,
+    width: 20,
+    height: 20,
+    position: "absolute"
+  },
+  materialIconTextbox: {
+    top: 402,
+    left: 32.99,
+    width: 321.85,
+    height: 40.86,
+    position: "absolute",
+    borderRadius: 5,
+    borderColor: "rgba(167,169,172,1)",
+    borderWidth: 1
+  },
+  materialIconTextbox1: {
+    top: 465.14,
+    left: 28.92,
+    width: 323.85,
+    height: 42.26,
+    position: "absolute",
+    borderRadius: 5,
+    borderColor: "rgba(167,169,172,1)",
+    borderWidth: 1
+  },
+  text: {
+    top: "36%",
+    left: "8%",
+    color: "#121212",
+    position: "absolute"
+  },
+  text2: {
+    top: 664.79,
+    left: 36.04,
+    color: "#121212",
+    position: "absolute",
+    fontSize: 12,
+    lineHeight: 12
+  },
+  text3: {
+    top: 630.44,
+    left: 68.76,
+    color: "#121212",
+    position: "absolute"
+  },
+  materialButtonPurple4: {
+    top: 601.99,
+    left: 28.22,
+    width: 325.24,
+    height: 50.57,
+    position: "absolute",
+    borderRadius: 4,
+    borderColor: "#000000",
+    borderWidth: 0
+  },
+  
+  button: {
+    top: 541.99,
+    left: 28.22,
+    width: 325.24,
+    height: 50.57,
+    backgroundColor: "rgba(42,5,77,1)",
+    position: "absolute",
+    borderRadius: 4,
+    borderColor: "#000000",
+    borderWidth: 1,
+  }, 
+});
+

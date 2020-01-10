@@ -1,0 +1,80 @@
+
+*** These modified files were found in JOE when it aborted on Thu Jul 11 08:10:33 2019
+*** JOE was aborted because the terminal closed
+
+*** File '(Unnamed)'
+adp
+adp
+user
+<<<
+<<<
+<<<
+<<<
+<<<
+<<
+andredupreez
+
+*** File '(Unnamed)'
+/Users/phuti.mokwena/repos/emerald_sa/.git/COMMIT_EDITMSG
+my.cnf
+/Applications/XAMPP/xamppfiles/etc/my.cnf
+/Applications/XAMPP/xamppfiles/etc/my.cnf
+/Applications/XAMPP/xamppfiles/etc/my.cnf
+index.php
+/Users/phuti.mokwena/.ssh/known_hosts
+mail151698.txt
+mail517438.txt
+mail517438.txt
+/Users/phuti.mokwena/repos/udemy_training/albums/node_modules/react-native/Libraries/Renderer/oss/ReactNativeRenderer-dev.js
+
+*** These modified files were found in JOE when it aborted on Tue Jul 16 12:19:33 2019
+*** JOE was aborted by UNIX signal 1
+
+*** File '/Users/phuti.mokwena/.bash_profile'
+# Add Homebrew `/usr/local/bin` and User `~/bin` to the `$PATH`
+PATH=/usr/local/bin:$PATH
+PATH=$HOME/bin:$PATH
+export PATH
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+  [ -r "$file" ] && source "$file"
+  done
+  unset file
+  
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session as a function
+source ~/.profile
+
+	export ANDROID_SDK_ROOT=/Users/phuti.mokwena/Library/Android/sdk/
+export PATH=${PATH}:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home
+export JRE_HOME=/usr/lib/jvm/java-8-oracle/jre
+
+alias go_jenkins='escript ~/repos/env2/go_jenkins_go'
+alias escript='/usr/local/Cellar/erlang@18/18.3.4/bin/escript'
+*** File '(Unnamed)'
+adp
+adp
+user
+<<<
+<<<
+<<<
+<<<
+<<<
+<<
+andredupreez
+
+*** File '(Unnamed)'
+build.gradle
+build.gradle
+build.gradle
+build.gradle
+build.gradle
+build.gradle
+build.gradle
+/Users/phuti.mokwena/.bash_profile
+/Users/phuti.mokwena/.bash_profile
+gradle.properties
+/Users/phuti.mokwena/.bash_profile
